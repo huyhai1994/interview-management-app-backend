@@ -1,8 +1,7 @@
 package com.codegym.interviewmanagementapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,9 +15,25 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Email is required")
+    @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "Name is required")
+    @Column(nullable = false)
+    private String name;
+
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
     private String password;
+
+    @NotBlank(message = "Phone number is required")
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     private String role;
 
     @Override
